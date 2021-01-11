@@ -18,7 +18,19 @@ const Pokedex: React.FC = () => (
         </div>
       </div>
     </div>
-    <div className={styles.Pokedex__rightPanel}>asd</div>
+    <div className={styles.Pokedex__rightPanel}>
+      <div className={styles.Pokedex__rightPanel__header_border} />
+      <div className={styles.Pokedex__rightPanel__header} />
+      <div className={styles.Pokedex__rightPanel__container}>
+        <div className={styles.Pokedex__rightPanel__elements}>
+          <div className={styles.Pokedex__rightPanel__screen} />
+        </div>
+        <div className={styles.Pokedex__rightPanel__actions}>
+          <div className={styles.button} />
+          <div className={styles.button} />
+        </div>
+      </div>
+    </div>
   </div>
 );
 
