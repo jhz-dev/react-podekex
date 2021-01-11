@@ -1,0 +1,171 @@
+@import '../../styles/variables.scss';
+
+$pokedex-width: 720px;
+$pokedex-height: 520px;
+$pokedex-header-height: 90px;
+$pokedex-screen-height: 300px;
+
+@mixin header {
+  border-top-left-radius: 20px;
+  border-top-right-radius: 20px;
+  clip-path: polygon(0 0, 100% 0, 100% 50%, 56% 50%, 38% 100%, 0 100%);
+  display: flex;
+  height: $pokedex-header-height;
+  transform: translateX(12px) scaleX(105%);
+  width: $pokedex-width / 2;
+}
+
+@mixin border-black() {
+  border: 1px solid $black;
+}
+
+.Pokedex {
+  display: flex;
+  height: $pokedex-height;
+  width: $pokedex-width;
+
+  &__leftPanel {
+    @include border-black();
+    background-color: $red;
+    border-bottom-left-radius: 20px;
+    border-top-left-radius: 30px;
+    border-top-right-radius: 20px;
+    border-top: none;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+
+    &::before {
+      @include border-black();
+      background-color: darken($red, 30%);
+      border-bottom-left-radius: 25px;
+      border-top-left-radius: 25px;
+      content: '';
+      height: 100%;
+      left: -5px;
+      position: absolute;
+      top: 6px;
+      transform: scaleX(104%) scaleY(102%);
+      width: 100%;
+      z-index: -10;
+    }
+
+    &__header_shadow_border {
+      @include header();
+      background-color: $black;
+      border-right: 1px solid $black;
+      left: 8px;
+      position: absolute;
+      top: 12px;
+      transform: scaleX(105%) scaleY(103%);
+    }
+
+    &__header_shadow {
+      @include header();
+      background-color: darken($red, 30%);
+      border-left: 20px solid darken($red, 30%);
+      position: absolute;
+      top: 11px;
+      transform: translateX(-1px) scaleX(101%) scaleY(103%);
+    }
+
+    &__header_border {
+      @include header();
+      background-color: $black;
+      border-right: 1px solid $black;
+      position: absolute;
+      top: 2px;
+    }
+
+    &__header {
+      @include border-black();
+      @include header();
+      background-color: $red;
+      border-bottom: none;
+      position: relative;
+      width: $pokedex-width / 2;
+    }
+    
+    &__divider {
+        @include border-black();
+        background-color: $red;
+        border-bottom: none;
+        border-radius: 50px/25px;
+        display: flex;
+        flex-direction: column;
+        height: $pokedex-height - 30px;
+        justify-content: space-around;
+        position: absolute;
+        right: -21px;
+        top: 40px;
+        width: 30px;
+
+        &::after {
+            @include border-black();
+            background-color: darken($red, 30%);
+            border-radius: 50px/25px;
+            bottom: 0;
+            content: '';
+            height: 15px;
+            left: 0;
+            position: absolute;
+            width: 28px;
+        }
+
+        .hinge {
+            @include border-black();
+            border-bottom: none;
+            border-radius: 50px/25px;
+            height: 30px;
+            left: -1px;
+            position: relative;
+            width: 30px;
+
+            &::after {
+                background-color: $red;
+                border-radius: 50px/25px;
+                border-top: 1px solid $black;
+                bottom: 0;
+                content: '';
+                height: 30px;
+                left: 0;
+                position: absolute;
+                top: 10px;
+                width: 30px;
+            }
+        }
+    }
+
+    &__elements {
+        border-bottom-left-radius: 10px;
+        border-bottom: 1px solid $black;
+        border-left: 1px solid $black;
+        display: flex;
+        flex: 1;
+        margin: 0 0 13px 10px;
+        padding: 25px 20px 20px 10px;
+    }
+
+    &__screen {
+        @include border-black();
+        background-color: $gray;
+        clip-path: polygon(100% 0, 100% 100%, 20% 100%, 0 80%, 0 0);
+        height: $pokedex-screen-height;
+        position: relative;
+        width: 100%;
+
+        &_details {
+            @include border-black();
+            background-color: $white;
+            border-radius: 20px;
+            height: calc(100% - 80px);
+            margin: 20px;
+            width: calc(100% - 40px);
+        }
+    }
+  }
+
+  &__rightPanel {
+    border: 1px solid orange;
+  }
+}
