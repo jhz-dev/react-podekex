@@ -1,0 +1,19 @@
+@import '../../styles/variables.scss';
+@import '../../styles/mixins.scss';
+
+.RectangleButton {
+  @include border-black();
+  align-items: center;
+  background-color: $yellow;
+  border-radius: 10px;
+  display: flex;
+  height: 40px;
+  justify-content: center;
+  width: 120px;
+
+  span {
+    color: $white;
+    text-shadow: 1px 1px rgba($black, 0.7);
+    text-transform: uppercase;
+  }
+}

@@ -1,23 +1,5 @@
 @import '../../styles/variables.scss';
-
-$pokedex-width: 720px;
-$pokedex-height: 520px;
-$pokedex-header-height: 90px;
-$pokedex-screen-height: 300px;
-
-@mixin header {
-  border-top-left-radius: 20px;
-  border-top-right-radius: 20px;
-  clip-path: polygon(0 0, 100% 0, 100% 50%, 56% 50%, 38% 100%, 0 100%);
-  display: flex;
-  height: $pokedex-header-height;
-  transform: translateX(12px) scaleX(105%);
-  width: $pokedex-width / 2;
-}
-
-@mixin border-black() {
-  border: 1px solid $black;
-}
+@import '../../styles/mixins.scss';
 
 .Pokedex {
   display: flex;
@@ -31,9 +13,9 @@ $pokedex-screen-height: 300px;
     border-top-left-radius: 30px;
     border-top-right-radius: 20px;
     border-top: none;
-    position: relative;
     display: flex;
     flex-direction: column;
+    position: relative;
 
     &::before {
       @include border-black();
@@ -136,41 +118,13 @@ $pokedex-screen-height: 300px;
         }
       }
     }
-
-    &__elements {
-      border-bottom-left-radius: 10px;
-      border-bottom: 1px solid $black;
-      border-left: 1px solid $black;
-      display: flex;
-      flex: 1;
-      margin: 0 0 13px 10px;
-      padding: 25px 20px 20px 10px;
-    }
-
-    &__screen {
-      @include border-black();
-      background-color: $gray;
-      clip-path: polygon(100% 0, 100% 100%, 20% 100%, 0 80%, 0 0);
-      height: $pokedex-screen-height;
-      position: relative;
-      width: 100%;
-
-      &_details {
-        @include border-black();
-        background-color: $white;
-        border-radius: 20px;
-        height: calc(100% - 80px);
-        margin: 20px;
-        width: calc(100% - 40px);
-      }
-    }
   }
 
   &__rightPanel {
     @include border-black();
     background-color: $red;
-    border-top: none;
     border-bottom-right-radius: 20px;
+    border-top: none;
     display: flex;
     flex-direction: column;
     position: relative;
@@ -208,35 +162,19 @@ $pokedex-screen-height: 300px;
     }
 
     &__container {
-        @include border-black();
-        border-top: none;
-        display: flex;
-        flex-direction: column;
-        flex: 1;
-        margin: 0 13px 10px 0;
-        border-bottom-right-radius: 10px;
-    }
-
-    &__elements {
-        @include border-black();
-        border-radius: 10px;
-        background-color: $green;
-        flex: 1;
-        margin: 30px 15px 30px 30px;
+      @include border-black();
+      border-bottom-right-radius: 10px;
+      border-top: none;
+      display: flex;
+      flex-direction: column;
+      flex: 1;
+      margin: 0 13px 10px 0;
     }
 
     &__actions {
-        display: flex;
-        justify-content: space-between;
-        margin: 0 15px 30px 30px;
-
-        .button {
-            @include border-black();
-            border-radius: 10px;
-            background-color: $yellow;
-            height: 30px;
-            width: 100px;
-        }
+      display: flex;
+      justify-content: space-between;
+      margin: 0 15px 30px 30px;
     }
   }
 }

@@ -1,0 +1,13 @@
+@mixin header {
+  border-top-left-radius: 20px;
+  border-top-right-radius: 20px;
+  clip-path: polygon(0 0, 100% 0, 100% 50%, 56% 50%, 38% 100%, 0 100%);
+  display: flex;
+  height: $pokedex-header-height;
+  transform: translateX(12px) scaleX(105%);
+  width: $pokedex-width / 2;
+}
+
+@mixin border-black() {
+  border: 1px solid $black;
+}
