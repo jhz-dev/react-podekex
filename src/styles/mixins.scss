@@ -11,3 +11,9 @@
 @mixin border-black() {
   border: 1px solid $black;
 }
+
+@mixin circle($width) {
+  border-radius: $width / 2;
+  height: $width;
+  width: $width;
+}

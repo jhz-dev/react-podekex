@@ -32,6 +32,72 @@
       z-index: -10;
     }
 
+    &__big_blue_circle {
+      @include border-black();
+      @include circle(70px);
+      background-color: $white;
+      left: 10px;
+      position: absolute;
+      top: 10px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
+      &::before {
+        @include circle(60px);
+        @include border-black();
+        background-color: $blue;
+        content: '';
+      }
+    }
+
+    &__icons {
+      position: absolute;
+      display: flex;
+      justify-content: center;
+      width: 100%;
+
+      .big_blue_circle {
+        @include border-black();
+        @include circle(70px);
+        background-color: $white;
+        left: 10px;
+        position: absolute;
+        top: 10px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        &::after {
+          content: '';
+          @include border-black();
+          @include circle(60px);
+          background-color: $blue;
+        }
+      }
+
+      .circle__red {
+        @include border-black();
+        @include circle(20px);
+        margin: 5px;
+        background-color: $red;
+      }
+
+      .circle__yellow  {
+        @include border-black();
+        @include circle(20px);
+        margin: 5px;
+        background-color: $yellow;
+      }
+
+      .circle__green {
+        @include border-black();
+        @include circle(20px);
+        margin: 5px;
+        background-color: darken($green, 30%);
+      }
+    }
+
     &__header_shadow_border {
       @include header();
       background-color: $black;
@@ -168,13 +234,13 @@
       display: flex;
       flex-direction: column;
       flex: 1;
-      margin: 0 13px 10px 0;
+      margin: 0 13px 12px 0;
     }
 
     &__actions {
       display: flex;
       justify-content: space-between;
-      margin: 0 15px 30px 30px;
+      margin: 0 15px 15px 30px;
     }
   }
 }

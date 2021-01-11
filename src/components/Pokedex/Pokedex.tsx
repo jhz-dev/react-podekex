@@ -10,15 +10,19 @@ type PokedexState = {
   isLoaded: boolean;
   pokemons: IPokemon[];
   pokemon: IPokemonDetails;
+  previous: string;
+  next: string;
 };
 
 class Pokedex extends React.Component<PokedexProps, PokedexState> {
   constructor(props: PokedexProps) {
     super(props);
     this.state = {
-      isLoaded: true,
+      isLoaded: false,
       pokemons: [],
-      pokemon: {}
+      pokemon: {},
+      previous: '',
+      next: '',
     };
   }
 
@@ -26,12 +30,18 @@ class Pokedex extends React.Component<PokedexProps, PokedexState> {
     this.getPokemons();
   }
 
-  getPokemons() {
+  getPokemons(
+    url: string = 'https://pokeapi.co/api/v2/pokemon?limit=100&offset=0'
+  ) {
     this.setState({
       isLoaded: false,
+      pokemons: [],
+      pokemon: {},
+      previous: '',
+      next: '',
     });
 
-    fetch('https://pokeapi.co/api/v2/pokemon?limit=100&offset=0')
+    fetch(url)
       .then((response) => response.json())
       .then(
         ({ results, next, previous }) => {
@@ -39,6 +49,8 @@ class Pokedex extends React.Component<PokedexProps, PokedexState> {
             isLoaded: true,
             pokemon: {},
             pokemons: results,
+            next,
+            previous,
           });
         },
         (error) => {
@@ -46,6 +58,8 @@ class Pokedex extends React.Component<PokedexProps, PokedexState> {
             isLoaded: false,
             pokemon: {},
             pokemons: [],
+            next: '',
+            previous: '',
           });
         }
       );
@@ -62,7 +76,7 @@ class Pokedex extends React.Component<PokedexProps, PokedexState> {
         ({ height, weight, id, name, sprites, types, moves }) => {
           this.setState({
             isLoaded: true,
-            pokemon: { height, weight, id, name, sprites, types, moves }
+            pokemon: { height, weight, id, name, sprites, types, moves },
           });
         },
         (error) => {
@@ -72,14 +86,30 @@ class Pokedex extends React.Component<PokedexProps, PokedexState> {
           });
         }
       );
-
   };
 
   onCancel = () => {
     this.getPokemons();
   };
 
-  onSearchClicked = () => {};
+  onSearch = () => {};
+
+  onPrevious = () => {
+    const { previous } = this.state;
+
+    if (previous) {
+      this.getPokemons(previous);
+    }
+  };
+
+
+  onNext = () => {
+    const { next } = this.state;
+    
+    if (next) {
+      this.getPokemons(next);
+    }
+  };
 
   render() {
     const { isLoaded, pokemons, pokemon } = this.state;
@@ -94,6 +124,14 @@ class Pokedex extends React.Component<PokedexProps, PokedexState> {
           <div className={styles.Pokedex__leftPanel__header_border} />
           <div className={styles.Pokedex__leftPanel__header} />
 
+          {/* left icons */}
+          <div className={styles.Pokedex__leftPanel__icons}>
+            <div className={styles.big_blue_circle} />
+            <div className={styles.circle__red} />
+            <div className={styles.circle__yellow} />
+            <div className={styles.circle__green} />
+          </div>
+
           {/* vertical hinge/divider */}
           <div className={styles.Pokedex__leftPanel__divider}>
             <div className={styles.hinge} />
@@ -101,6 +139,11 @@ class Pokedex extends React.Component<PokedexProps, PokedexState> {
           </div>
 
           <LeftScreen isLoaded={isLoaded} pokemonSprites={pokemon.sprites} />
+
+          <div className={styles.Pokedex__rightPanel__actions}>
+            <RectangleButton text="cancel" onClick={this.onCancel} />
+            <RectangleButton text="search" onClick={this.onSearch} />
+          </div>
         </div>
 
         {/* right panel */}
@@ -119,8 +162,8 @@ class Pokedex extends React.Component<PokedexProps, PokedexState> {
 
             {/* right buttons */}
             <div className={styles.Pokedex__rightPanel__actions}>
-              <RectangleButton text="cancel" onClick={this.onCancel} />
-              <RectangleButton text="search" onClick={this.onSearchClicked} />
+              <RectangleButton text="previous" onClick={this.onPrevious} />
+              <RectangleButton text="next" onClick={this.onNext} />
             </div>
           </div>
         </div>

@@ -17,7 +17,7 @@ const buildList = (pokemons: IPokemon[], onItemClick: (url: string) => void) =>
       key={item.name}
       onClick={() => onItemClick(item.url)}
     >
-      {index + 1}. {item.name}
+      {item.name}
     </button>
   ));
 

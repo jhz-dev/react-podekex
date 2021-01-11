@@ -11,6 +11,11 @@
   justify-content: center;
   width: 120px;
 
+  &:hover {
+    cursor: pointer;
+    background-color: lighten($yellow, 10%);
+  }
+
   span {
     color: $white;
     text-shadow: 1px 1px rgba($black, 0.7);
