@@ -1,4 +1,23 @@
-# Getting Started with Create React App
+# Demo
+[Live here](https://jhz-dev-react-pokedex.netlify.app/)
+![gif](./pokedex.gif)
+
+## Resources
+* [Pokémon Api](https://pokeapi.co/)
+* [Create React App](https://github.com/facebook/create-react-app)
+
+## Prettier and Eslint
+
+Added following this [Post](https://feralamillo.medium.com/create-react-app-typescript-eslint-and-prettier-699277b0b913)
+
+## SASS
+
+Added sass following this [Article](https://scotch.io/tutorials/using-sass-in-create-react-app-v2)
+
+## Adding components
+[generate-react-cli](https://www.npmjs.com/package/generate-react-cli)
+
+## Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
@@ -44,14 +63,3 @@ You don’t have to ever use `eject`. The curated feature set is suitable for sm
 You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
 
 To learn React, check out the [React documentation](https://reactjs.org/).
-
-## Prettier and Eslint
-
-Added following this [Post](https://feralamillo.medium.com/create-react-app-typescript-eslint-and-prettier-699277b0b913)
-
-## SASS
-
-Added sass following this [Article](https://scotch.io/tutorials/using-sass-in-create-react-app-v2)
-
-## Adding components
-[generate-react-cli](https://www.npmjs.com/package/generate-react-cli)
