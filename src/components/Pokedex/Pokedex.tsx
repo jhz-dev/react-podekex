@@ -12,6 +12,7 @@ type PokedexState = {
   pokemon: IPokemonDetails;
   previous: string;
   next: string;
+  search: boolean;
 };
 
 class Pokedex extends React.Component<PokedexProps, PokedexState> {
@@ -23,6 +24,7 @@ class Pokedex extends React.Component<PokedexProps, PokedexState> {
       pokemon: {},
       previous: '',
       next: '',
+      search: false,
     };
   }
 
@@ -33,13 +35,7 @@ class Pokedex extends React.Component<PokedexProps, PokedexState> {
   getPokemons(
     url: string = 'https://pokeapi.co/api/v2/pokemon?limit=100&offset=0'
   ) {
-    this.setState({
-      isLoaded: false,
-      pokemons: [],
-      pokemon: {},
-      previous: '',
-      next: '',
-    });
+    this.resetState();
 
     fetch(url)
       .then((response) => response.json())
@@ -54,21 +50,13 @@ class Pokedex extends React.Component<PokedexProps, PokedexState> {
           });
         },
         (error) => {
-          this.setState({
-            isLoaded: false,
-            pokemon: {},
-            pokemons: [],
-            next: '',
-            previous: '',
-          });
+          this.resetState();
         }
       );
   }
 
   getPokemon = (url: string) => {
-    this.setState({
-      isLoaded: false,
-    });
+    this.resetState();
 
     fetch(url)
       .then((response) => response.json())
@@ -77,6 +65,8 @@ class Pokedex extends React.Component<PokedexProps, PokedexState> {
           this.setState({
             isLoaded: true,
             pokemon: { height, weight, id, name, sprites, types, moves },
+            previous: '',
+            next: '',
           });
         },
         (error) => {
@@ -92,7 +82,13 @@ class Pokedex extends React.Component<PokedexProps, PokedexState> {
     this.getPokemons();
   };
 
-  onSearch = () => {};
+  onNext = () => {
+    const { next } = this.state;
+
+    if (next) {
+      this.getPokemons(next);
+    }
+  };
 
   onPrevious = () => {
     const { previous } = this.state;
@@ -102,17 +98,47 @@ class Pokedex extends React.Component<PokedexProps, PokedexState> {
     }
   };
 
+  onSearch = () => {
+    const { search } = this.state;
+    this.setState({ search: !search });
+  };
 
-  onNext = () => {
-    const { next } = this.state;
-    
-    if (next) {
-      this.getPokemons(next);
+  resetState = () => {
+    this.setState({
+      isLoaded: false,
+      pokemons: [],
+      pokemon: {},
+      previous: '',
+      next: '',
+      search: false,
+    });
+  };
+
+  searchPokemon = (text: string) => {
+    if (text) {
+      fetch('https://pokeapi.co/api/v2/pokemon?limit=2000')
+        .then((response) => response.json())
+        .then(
+          ({ results, next, previous }) => {
+            const data = results.filter(({ name }: { name: string }) =>
+              name.includes(text)
+            );
+
+            this.setState({
+              isLoaded: true,
+              pokemon: {},
+              pokemons: data,
+              next,
+              previous,
+            });
+          },
+          () => {}
+        );
     }
   };
 
   render() {
-    const { isLoaded, pokemons, pokemon } = this.state;
+    const { isLoaded, pokemons, pokemon, search, previous, next } = this.state;
 
     return (
       <div className={styles.Pokedex} data-testid="Pokedex">
@@ -141,8 +167,16 @@ class Pokedex extends React.Component<PokedexProps, PokedexState> {
           <LeftScreen isLoaded={isLoaded} pokemonSprites={pokemon.sprites} />
 
           <div className={styles.Pokedex__rightPanel__actions}>
-            <RectangleButton text="cancel" onClick={this.onCancel} />
-            <RectangleButton text="search" onClick={this.onSearch} />
+            <RectangleButton
+              disabled={!isLoaded}
+              text="cancel"
+              onClick={this.onCancel}
+            />
+            <RectangleButton
+              disabled={!isLoaded}
+              text="search"
+              onClick={this.onSearch}
+            />
           </div>
         </div>
 
@@ -155,15 +189,26 @@ class Pokedex extends React.Component<PokedexProps, PokedexState> {
           <div className={styles.Pokedex__rightPanel__container}>
             {/* right screen */}
             <RightScreen
+              isLoaded={isLoaded}
               pokemons={pokemons}
               pokemon={pokemon}
+              activateSearch={search}
               onItemClick={this.getPokemon}
+              onTextChange={this.searchPokemon}
             />
 
             {/* right buttons */}
             <div className={styles.Pokedex__rightPanel__actions}>
-              <RectangleButton text="previous" onClick={this.onPrevious} />
-              <RectangleButton text="next" onClick={this.onNext} />
+              <RectangleButton
+                disabled={!isLoaded || !previous}
+                text="previous"
+                onClick={this.onPrevious}
+              />
+              <RectangleButton
+                disabled={!isLoaded || !next}
+                text="next"
+                onClick={this.onNext}
+              />
             </div>
           </div>
         </div>

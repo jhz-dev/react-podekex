@@ -11,7 +11,12 @@
   justify-content: center;
   width: 120px;
 
-  &:hover {
+  &:disabled {
+    background-color: darken($yellow, 10%);
+    cursor: not-allowed;
+  }
+
+  &:hover:enabled {
     cursor: pointer;
     background-color: lighten($yellow, 10%);
   }
